@@ -12,7 +12,10 @@ class IdeaController extends Controller
      */
     public function index()
     {
-        //
+        //return all ideas
+        $ideas = Idea::all();
+
+        return response()->json($ideas);
     }
 
     /**
@@ -34,9 +37,23 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea)
+    public function show($id)
     {
-        //
+        //show an idea
+        $idea = Idea::find($id);
+
+        return response()->json($idea, 200);
+    }
+
+    //display an ideas comments
+    public function showComments($id)
+    {
+        // find idea and comments
+        $idea = Idea::with('comments')->find($id);
+
+        $comments = $idea->comments;
+
+        return response()->json($idea, 200);
     }
 
     /**
