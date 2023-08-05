@@ -75,8 +75,12 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea)
+    public function destroy($id)
     {
-        //
+        $idea = Idea::find($id);
+
+        // Delete the idea from the database
+        $idea->delete();
+        return response()->json(['message' => 'Post has been removed'], 200);
     }
 }
