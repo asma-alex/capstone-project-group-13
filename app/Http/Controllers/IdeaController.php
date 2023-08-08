@@ -13,7 +13,7 @@ class IdeaController extends Controller
     public function index()
     {
         //return all ideas
-        $ideas = Idea::all();
+        $ideas = Idea::withCount('comments')->get();
 
         return response()->json($ideas);
     }
@@ -40,16 +40,19 @@ class IdeaController extends Controller
     public function show($id)
     {
         //show an idea
-        $idea = Idea::find($id);
+        //$idea = Idea::find($id);
+        //return response()->json($idea, 200);
 
+        $idea = Idea::with('name')->find($id);    
         return response()->json($idea, 200);
     }
+    
 
     //display an ideas comments
     public function showComments($id)
     {
         // find idea and comments
-        $idea = Idea::with('comments')->find($id);
+        $idea = Idea::with('comments.user')->find($id);
 
         $comments = $idea->comments;
 

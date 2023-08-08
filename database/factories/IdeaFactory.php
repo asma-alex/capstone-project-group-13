@@ -19,7 +19,7 @@ class IdeaFactory extends Factory
         return [
             'title' => $this->faker->sentence(5),
             'content' => $this->faker->paragraph(5),
-            'likes' => 0,
+            'likes' => $this->faker->numberBetween(1, 10),
             'user_id' => $this->faker->numberBetween(1, 10)
         ];
     }

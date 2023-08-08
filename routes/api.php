@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function(){
     //get post comments
-    Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
+    //Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
 });
 
 //posts
@@ -31,7 +31,7 @@ Route::get('ideas', [IdeaController::class, 'index']);
 //get an idea
 Route::get('ideas/{id}', [IdeaController::class, 'show']);
 //get post comments
-//Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
+Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
 
 //create post
 Route::post('ideas', [IdeaController::class, 'store']);
@@ -40,3 +40,5 @@ Route::post('ideas', [IdeaController::class, 'store']);
 Route::delete('ideas/{id}', [IdeaController::class, 'destroy']);
 
 //update post
+
+//like post
