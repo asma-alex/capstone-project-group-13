@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class IdeaController extends Controller
 {
@@ -13,7 +14,11 @@ class IdeaController extends Controller
     public function index()
     {
         //return all ideas
-        $ideas = Idea::withCount('comments')->get();
+        //$ideas = Idea::withCount('comments')->get();
+        //$ideas = Idea::with('user')->get();
+        $ideas = Idea::with(['user:id,name', 'comments'])
+                     ->withCount('comments')
+                     ->get();
 
         return response()->json($ideas);
     }
@@ -23,15 +28,23 @@ class IdeaController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        // Create a new idea instance
+        $idea = new Idea();
+        $idea->title = request('title');
+        $idea->content = request('content');
+        $idea->user_id = request('user_id');
+        $idea->likes = 0;
+        $idea->save();
+
+        return response()->json($idea, 201);
     }
 
     /**
@@ -40,10 +53,7 @@ class IdeaController extends Controller
     public function show($id)
     {
         //show an idea
-        //$idea = Idea::find($id);
-        //return response()->json($idea, 200);
-
-        $idea = Idea::with('name')->find($id);    
+        $idea = Idea::find($id);    
         return response()->json($idea, 200);
     }
     
@@ -51,12 +61,21 @@ class IdeaController extends Controller
     //display an ideas comments
     public function showComments($id)
     {
-        // find idea and comments
-        $idea = Idea::with('comments.user')->find($id);
+        // find idea and comments //with username
+        $idea = Idea::with(['user:id,name', 'comments.user:id,name'])->find($id);
 
         $comments = $idea->comments;
 
         return response()->json($idea, 200);
+    }
+    //display certain users ideas
+    public function getUserIdeas($id)
+    {
+        $user = User::find($id);
+        $ideas = $user->ideas;
+
+    return response()->json($ideas, 200);
+
     }
 
     /**

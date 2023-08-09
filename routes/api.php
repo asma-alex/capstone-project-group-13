@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\IdeaController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function(){
     //get post comments
     //Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
+
+    //create post
+    Route::post('ideas', [IdeaController::class, 'store']);
 });
 
 //posts
@@ -33,12 +37,15 @@ Route::get('ideas/{id}', [IdeaController::class, 'show']);
 //get post comments
 Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
 
-//create post
-Route::post('ideas', [IdeaController::class, 'store']);
 
 //delete post
 Route::delete('ideas/{id}', [IdeaController::class, 'destroy']);
-
 //update post
-
+Route::put('ideas', [IdeaController::class, 'update']);
 //like post
+
+//get all post of specific user
+Route::get('ideas/user/{id}', [IdeaController::class, 'getUserIdeas']);
+
+//create comment
+Route::post('comments', [CommentController::class, 'store']);
