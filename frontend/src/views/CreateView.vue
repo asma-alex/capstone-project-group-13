@@ -17,6 +17,7 @@
 
 <script>
 //get id
+import { useUserStore } from '@/store/userStore';
 export default {
   data() {
     return {
@@ -24,9 +25,16 @@ export default {
       content: '',
     };
   },
+  computed: {
+  user() {
+    return useUserStore();
+    },
+  },
   methods: {
     createIdea() {
-      const token = localStorage.getItem('token'); 
+      //const token = localStorage.getItem('token'); 
+      const token = this.user.authToken;
+      console.log(token);
       if (token) {
         const idea = {
           title: this.title,

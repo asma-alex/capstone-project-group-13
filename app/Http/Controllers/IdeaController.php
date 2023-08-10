@@ -16,7 +16,7 @@ class IdeaController extends Controller
         //return all ideas
         //$ideas = Idea::withCount('comments')->get();
         //$ideas = Idea::with('user')->get();
-        $ideas = Idea::with(['user:id,name', 'comments'])
+        $ideas = Idea::with(['user:id,name'])
                      ->withCount('comments')
                      ->get();
 
@@ -89,9 +89,15 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Idea $idea)
+    public function update($id)
     {
-        //
+        $idea = Idea::find($id);
+        $idea->title = request('title');
+        $idea->content = request('content');
+
+        $idea->save();
+
+        return response()->json($idea, 200);
     }
 
     /**

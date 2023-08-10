@@ -24,9 +24,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function(){
     //get post comments
     //Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
-
     //create post
     Route::post('ideas', [IdeaController::class, 'store']);
+    //delete post
+    Route::delete('ideas/{id}', [IdeaController::class, 'destroy']);
 });
 
 //posts
@@ -39,9 +40,9 @@ Route::get('ideas/{id}/comments', [IdeaController::class, 'showComments']);
 
 
 //delete post
-Route::delete('ideas/{id}', [IdeaController::class, 'destroy']);
+//Route::delete('ideas/{id}', [IdeaController::class, 'destroy']);
 //update post
-Route::put('ideas', [IdeaController::class, 'update']);
+Route::put('ideas/{id}', [IdeaController::class, 'update']);
 //like post
 
 //get all post of specific user

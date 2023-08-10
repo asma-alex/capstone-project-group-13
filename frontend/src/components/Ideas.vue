@@ -1,11 +1,12 @@
 <template>
     <div>
+      <p class="font-bold text-xl">Bulletin board:</p>
         <div v-for="idea in ideas" :key="idea.id" class="my-8">
             <hr>
-          <p class="font-bold">{{ idea.title }}</p>
-          <p>Posted by: {{ idea.user.name }} at {{ idea.created_at }}</p>
+          <p class="font-bold text-xl">{{ idea.title }}</p>
+          <p class="text-zinc-400">Posted by: {{ idea.user.name }} at {{ idea.created_at }}</p>
           <p>{{ idea.content }}</p>
-          <p>Likes {{ idea.likes }}</p>
+          <p class="text-emerald-500">Likes {{ idea.likes }}</p>
           <router-link :to="'/idea/' + idea.id" class="text-emerald-500 hover:text-emerald-200">View Comments ({{ idea.comments_count }})</router-link>
           <hr />
         </div>

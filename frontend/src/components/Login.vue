@@ -23,12 +23,18 @@
 </template>
 
 <script>
+import { useUserStore } from '@/store/userStore';
 export default {
   data() {
     return {
       email: '',
       password: '',
     };
+  },
+  computed: {
+    user() {
+      return useUserStore();
+    },
   },
   methods: {
     login() {
@@ -47,14 +53,21 @@ export default {
       })
         .then((response) => {
           if (!response.ok) {
+            console.log(response);
             throw new Error('Login failed');
           }
+          console.log(response)
           return response.json();
         })
         .then((data) => {
-          const token = data.token;
-          localStorage.setItem('token', token);
-          console.log('token set');
+          const userStore = useUserStore();
+          //set token in the store
+          userStore.setAuthToken(data.token);
+          //set user in the store
+          userStore.setUser(data.user)
+        // const token = data.token;
+          //localStorage.setItem('token', token);
+          console.log('token set',userStore.getAuthToken, userStore.getUserId, userStore.getUserName);
           this.$router.push('/');
 
         })
