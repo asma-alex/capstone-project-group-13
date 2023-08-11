@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'bulletn user',
             'email' => 'test@example.com',
             'password' => Hash::make('password')
         ]);
@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(9)->create();
 
        $this->call([
-        IdeaSeeder::class
+        IdeaSeeder::class,
+        CommentSeeder::class,
+        LikesSeeder::class
        ]); 
     }
 }

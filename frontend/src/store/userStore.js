@@ -5,11 +5,13 @@ export const useUserStore = defineStore('user', {
     authToken: null,
     userId: null,
     userName: null,
+    userEmail: null,
   }),
   getters: {
     isAuthenticated: (state) => state.authToken !== null,
     getUserId: (state) => state.userId,
     getUserName: (state) => state.userName,
+    getUserEmail: (state) => state.userEmail,
     getAuthToken: (state) => state.authToken
   },
   actions: {
@@ -19,6 +21,8 @@ export const useUserStore = defineStore('user', {
     setUser(data) {
         this.userId = data.id;
         this.userName = data.name;
+        this.userEmail = data.email;
+        
       },
     clearAuthToken() {
         this.authToken = null;

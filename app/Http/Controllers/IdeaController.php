@@ -16,9 +16,10 @@ class IdeaController extends Controller
         //return all ideas
         //$ideas = Idea::withCount('comments')->get();
         //$ideas = Idea::with('user')->get();
-        $ideas = Idea::with(['user:id,name'])
-                     ->withCount('comments')
+        $ideas = Idea::with(['user:id,name', 'likes'])
+                     ->withCount('comments', 'likes')
                      ->get();
+                     
 
         return response()->json($ideas);
     }
@@ -41,7 +42,6 @@ class IdeaController extends Controller
         $idea->title = request('title');
         $idea->content = request('content');
         $idea->user_id = request('user_id');
-        $idea->likes = 0;
         $idea->save();
 
         return response()->json($idea, 201);
