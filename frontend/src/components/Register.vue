@@ -13,6 +13,7 @@
                     <input v-model="name" id="name" name="" 
                         class="h-10 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-emerald-500">
                 </div>
+                <div v-if="nameError" class="text-red-500">{{ nameError }}</div>
                 <!-- email -->
                 <div class="mb-2 text-left">
                     <label for="email" 
@@ -21,6 +22,8 @@
                     <input v-model="email" id="email" 
                         class="h-10 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-emerald-500">
                 </div>
+                <div v-if="emailError" class="text-red-500">{{ emailError }}</div>
+
                 <!-- pass -->
                 <div class="mb-2 text-left">
                     <label for="password" 
@@ -29,6 +32,7 @@
                     <input v-model="password" id="password" type="password" name="" 
                         class="h-10 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-emerald-500">
                 </div>
+                <div v-if="passwordError" class="text-red-500">{{ passwordError }}</div>
                 <!-- confirm pass -->
                 <div class="mb-2 text-left">
                     <label for="password" 
@@ -37,6 +41,7 @@
                     <input v-model="password_confirmation" id="password" type="password"
                         class="h-10 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-emerald-500">
                 </div>
+                <div v-if="passwordConfirmError" class="text-red-500">{{ passwordConfirmError }}</div>
                 <div v-if="errorMessage" class="text-red-500">{{ errorMessage }}</div>
                     <button type="submit" 
                         class="w-full px-4 py-2 my-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-emerald-600">
@@ -61,7 +66,7 @@ export default {
       nameError: '',
       emailError: '',
       passwordError: '',
-      passwordConfirmationError: '',
+      passwordConfirmError: '',
     };
   },
   computed: {
@@ -77,6 +82,15 @@ export default {
         password: this.password,
         password_confirmation: this.password_confirmation,
       };
+      this.emailError = this.email === '' ? 'Email is required' : '';
+      this.passwordError = this.password === '' ? 'Password is required' : '';
+      this.nameError = this.name === '' ? 'Name is required' : '';
+      this.passwordConfirmError = this.password_confirmation === '' ? 'Password confirmation is required' : '';
+
+      if (this.email === '' || this.password === '' || this.name === '' || this.password_confirmation === '') {
+        return;
+      }
+
       console.log(userInfo)
       fetch('http://127.0.0.1:8000/register', {
         method: 'POST',
