@@ -20,15 +20,21 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $comment = new Comment();
+        $comment->content = request('content');
+        $comment->idea_id = request('idea_id');
+        $comment->user_id = request('user_id');
+        $comment->save();
+
+        return response()->json($comment, 201);
     }
 
     /**
